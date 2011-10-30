@@ -36,7 +36,6 @@
 
  (setf *dispatch-table*
   (nconc (list 'dispatch-easy-handlers
-          (create-prefix-dispatcher "/irsvp.js" (variable-dispatcher "application/javascript" irsvp-client:*client-script-code*))
           (create-static-file-dispatcher-and-handler "/irsvp.css" #p"static/irsvp.css")
           (create-prefix-dispatcher "/login" 'login-handler)
           (create-prefix-dispatcher "/logout" 'logout-handler)

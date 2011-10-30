@@ -5,7 +5,7 @@
 
 (defsystem "irsvp"
  :serial t
- :depends-on (:hunchentoot :cl-who :postmodern :cl-json :irsvp-client)
+ :depends-on (:hunchentoot :cl-who :postmodern :cl-json)
  :components (
    (:module :server
     :serial t
@@ -13,15 +13,14 @@
        (:static-file "irsvp.asd")
        (:file "package")
        (:file "parameters")
-;       (:file "html-helpers")
+       (:file "html-helpers")
        (:file "session")
        (:file "bad-passwords")
-;       (:file "join")
-;       (:file "home")
-;       (:file "index")
-;       (:file "log")
+       (:file "join")
+       (:file "home")
+       (:file "index")
        (:file "init")
-;       (:file "create-schema")
+       (:file "create-schema")
       )
     )
   )
