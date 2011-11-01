@@ -40,8 +40,9 @@
           (create-prefix-dispatcher "/login" 'login-handler)
           (create-prefix-dispatcher "/logout" 'logout-handler)
           (create-prefix-dispatcher "/join" 'join-handler)
-          (create-prefix-dispatcher "/home" 'home-handler)
-          (create-prefix-dispatcher "/log" (uri-dispatcher #'log-handler));'log-handler)
+          (create-prefix-dispatcher "/home" 'home-view)
+          (create-prefix-dispatcher "/event" (uri-dispatcher #'event-view))
+          (create-prefix-dispatcher "/rsvp" (uri-dispatcher #'rsvp-view))
           (create-prefix-dispatcher "/" 'index-handler)
           'default-dispatcher))))
 

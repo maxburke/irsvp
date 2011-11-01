@@ -21,6 +21,8 @@
        (:file "index")
        (:file "init")
        (:file "create-schema")
+       (:file "event-model")
+       (:file "invite-model")
       )
     )
   )
