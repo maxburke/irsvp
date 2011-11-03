@@ -19,6 +19,9 @@
    (execute (:drop-table 'event)))
 
   (create-table 'event)
+
+  (let ((event (make-instance 'event :user-id 1 :name "Max and Mon's Wedding")))
+   (insert-dao event))
  )
 )
 
