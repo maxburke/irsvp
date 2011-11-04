@@ -13,8 +13,6 @@
    (redirect "/"))
 
   (with-html-output-to-string (html-stream)
-   (let ((invites (invites-fetch event-id)))
-   )
-   (:h1 "deal with it"))
+  )
  )
 )

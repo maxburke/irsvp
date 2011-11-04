@@ -18,7 +18,7 @@
 
 (defun process-invite-delete (invite-id)
  (if invite-id
-  (let ((invite (select-dao 'invite (:= id invite-id))))
+  (let ((invite (select-dao 'invite (:= 'id invite-id))))
    (if invite (delete-dao invite))
   )
  )

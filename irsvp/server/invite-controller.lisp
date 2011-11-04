@@ -36,23 +36,6 @@
  )
 )
 
-(defun invites-fetch (event-id)
- (with-connection *db-connection-parameters*
-  (let ((records (select-dao 'invite (:= 'event-id event-id)))
-        (invites-list '()))
-   (mapcar (lambda (invite)
-            (push (vector
-                   (invite-id invite)
-                   (invite-last-name invite)
-                   (invite-first-name invite)
-                   (invite-code invite)
-                   (invite-email invite)
-                   (invite-status-to-symbol (invite-responded invite))) invites-list)) records)
-   (nreverse invites-list)
-  )
- )
-)
-
 (defun invite-create (event-id email &optional first-name last-name)
  (with-connection *db-connection-parameters*
   (let ((new-invite (make-instance 'invite

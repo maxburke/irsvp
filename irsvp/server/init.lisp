@@ -36,14 +36,13 @@
 
  (setf *dispatch-table*
   (nconc (list 'dispatch-easy-handlers
-          (create-static-file-dispatcher-and-handler "/irsvp.css" #p"static/irsvp.css")
+          (create-folder-dispatcher-and-handler "/static/" #p"static/")
           (create-prefix-dispatcher "/login" 'login-handler)
           (create-prefix-dispatcher "/logout" 'logout-handler)
           (create-prefix-dispatcher "/join" 'join-handler)
           (create-prefix-dispatcher "/home" 'home-view)
           (create-prefix-dispatcher "/event" (uri-dispatcher #'event-view))
           (create-prefix-dispatcher "/invite" (uri-dispatcher #'invite-view))
-          (create-prefix-dispatcher "/rsvp" (uri-dispatcher #'rsvp-view))
           (create-prefix-dispatcher "/" 'index-handler)
           'default-dispatcher))))
 
