@@ -16,7 +16,7 @@
 (defun invite-view-handle-post (event-id)
 )
 
-(defun process-invite-delete (invite-id)
+(defun invite-delete (invite-id)
  (if invite-id
   (let ((invite (select-dao 'invite (:= 'id invite-id))))
    (if invite (delete-dao invite))
@@ -39,7 +39,7 @@
   (cond ((eq req :get) (invite-view-handle-get event-id invite-id))
         ((eq req :put) (invite-view-handle-put invite-id))
         ((eq req :post) (invite-view-handle-post event-id))
-        ((eq req :delete) (process-invite-delete invite-id))
+        ((eq req :delete) (invite-delete invite-id))
         (t (server-log "Unknown HTTP method!")))
  )
 )
