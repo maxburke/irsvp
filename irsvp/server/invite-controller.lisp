@@ -5,14 +5,16 @@
 (defconstant +declined+ 2)
 
 (defvar *code-chars* "0123456789abcdefghijklmnopqrstuv")
+(defvar *code-seed* 1918072400) ; FourCC 'rSvP'
 
-;; TODO: I need to make this a little better. Perhaps it's worth keeping some
-;; sort of counter in the application that we concatenate with the current
-;; time? That'd work, so that at least the invites should be unique even if
-;; the application is restarted.
-(defun invite-create-code ()
+;; This function creates the "invite code" which is a base-32 encoded
+;; string made by xor'ing the fourCC 'rSvP' with the database id for the
+;; actual invite record. The primary key for the invites are used because
+;; these values will persist if the server application stops working.
+(defun invite-create-code (invite-id)
  (let ((time (get-universal-time))
-       (code '()))
+       (code '())
+       (counter))
   (labels ((recursive-create-code (code-base)
             (let ((fragment (logand code-base 31))
                   (remainder (ash code-base -5)))
@@ -21,7 +23,7 @@
                (push (elt *code-chars* fragment) code)
                (recursive-create-code remainder)))
             )))
-   (recursive-create-code time))
+   (recursive-create-code (logxor *code-seed* invite-id)))
   (coerce code 'string)
  )
 )
@@ -50,3 +52,21 @@
   )
  )
 )
+
+(defun invite-create (event-id email &optional first-name last-name)
+ (with-connection *db-connection-parameters*
+  (let ((new-invite (make-instance 'invite
+                     :event-id event-id
+                     :email email
+                     :last-name (or last-name "")
+                     :first-name (or first-name ""))))
+   (insert-dao new-invite)
+   ; The invite code can't be calculated until the invite record is created.
+   (let* ((id (invite-id new-invite))
+          (code (invite-create-code id)))
+    (setf (invite-code new-invite) code)
+    (save-dao new-invite))
+  )
+ )
+)
+

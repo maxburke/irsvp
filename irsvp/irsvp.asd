@@ -26,6 +26,7 @@
        (:file "event-view")
        (:file "invite-model")
        (:file "invite-controller")
+       (:file "invite-view")
       )
     )
   )
