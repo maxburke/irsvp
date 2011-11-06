@@ -47,7 +47,7 @@
           (:div :id "invitelist-app"
            (:div :class "new-invite"
             (:div :class "new-invite-title"
-             (:h2 "Invite someone!"))
+             (:h2 "Add to the guest list!"))
             (:input :type "text" :class "invite-email-input" :placeholder "email")
             (:input :type "text" :class "invite-last-name-input" :placeholder "last name")
             (:input :type "text" :class "invite-first-name-input" :placeholder "first name")))
