@@ -8,12 +8,12 @@ var INVITELISTTEMPLATE = '<div class="entry">'
 + '        <div class="invite-special"></div>'
 + '    </div>'
 + '    <div class="edit">'
-+ '        <input class="invite-email-input" value=""/>'
-+ '        <input class="invite-last-name-input" value=""/>'
-+ '        <input class="invite-first-name-input" value=""/>'
++ '        <input class="invite-email-input" value="" placeholder="email"/>'
++ '        <input class="invite-last-name-input" value="" placeholder="last name"/>'
++ '        <input class="invite-first-name-input" value="" placeholder="first name"/>'
 + '        <div class="invite-code"></div>'
 + '        <input class="invite-responded-input" value=""/>'
-+ '        <textarea class="invite-special-input"></textarea>'
++ '        <textarea class="invite-special-input" placeholder="comments and special requests"></textarea>'
 + '    </div>'
 + '</div>';
 
@@ -52,7 +52,9 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         'keypress .edit' : 'handleKeypress'
     },
     initialize : function() {
+        _.bindAll(this, 'render', 'remove');
         this.model.bind('change', this.render);
+        this.model.bind('destroy', this.remove);
         this.model.view = this;
     },
     render : function() {
@@ -64,7 +66,20 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         $(this.el).removeClass('editing');
     },
     saveAndClose : function() {
-        alert("implement saveAndClose!");
+        var newEmail = this.$('.invite-email-input').val();
+        var newLastName = this.$('.invite-last-name-input').val();
+        var newFirstName = this.$('.invite-first-name-input').val();
+        var newResponded = this.$('.invite-responded-input').val();
+        var newSpecial = this.$('.invite-special-input').val();
+        var newModel = {
+            email : newEmail,
+            lastName : newLastName,
+            firstName : newFirstName,
+            responded : newResponded,
+            special : newSpecial,
+        };
+        this.model.save(newModel);
+        this.close();
     },
     handleKeypress : function(e) {
         if (e.keyCode == 13) {
@@ -98,12 +113,12 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         $(this.el).remove();
     }
 });
-_.bindAll(inviteList.Views.InviteEntryView);
 
 
 inviteList.Views.inviteListAppView = Backbone.View.extend({
     el : $('#invitelist-app'),
     initialize : function() {
+        _.bindAll(this, 'addEntry', 'addAllEntries');
         inviteList.Data.Invites.bind('add', this.addEntry);
         inviteList.Data.Invites.bind('reset', this.addAllEntries);
         inviteList.Data.Invites.bind('all', this.render);
@@ -120,7 +135,6 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
         inviteList.Data.Invites.each(this.addEntry);
     }
 });
-_.bindAll(inviteList.Views.inviteListAppView);
 
 inviteList.init = function() {
     inviteList.App = new inviteList.Views.inviteListAppView ();
