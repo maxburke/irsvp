@@ -17,6 +17,16 @@
  (concatenate 'string "/events/" (write-to-string event-id))
 )
 
+(defun event-get-name (event-id)
+ (with-connection *db-connection-parameters*
+  (let ((record (select-dao 'event (:= 'id event-id))))
+   (if (not (null record))
+     (event-name (car record))
+    nil)
+  )
+ )
+)
+
 (defun event-validate-for-user (event-id user-id)
  (with-connection *db-connection-parameters*
   (let ((event (select-dao 'event (:= 'id event-id))))
