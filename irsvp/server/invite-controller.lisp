@@ -53,3 +53,18 @@
  )
 )
 
+(defun invite-controller-handle-update (invite-id raw-invite)
+ (with-connection *db-connection-parameters*
+  (let ((obj (get-dao 'invite (cdr (assoc :id raw-invite)))))
+   (assert (equal (invite-event-id obj) (cdr (assoc :event-id raw-invite))))
+   (setf (invite-last-name obj) (cdr (assoc :last-name raw-invite)))
+   (setf (invite-first-name obj) (cdr (assoc :first-name raw-invite)))
+   (setf (invite-email obj) (cdr (assoc :email raw-invite)))
+   (setf (invite-special obj) (cdr (assoc :special raw-invite)))
+   (setf (invite-responded obj) (cdr (assoc :responded raw-invite)))
+   (update-dao obj)
+   nil
+  )
+ )
+)
+
