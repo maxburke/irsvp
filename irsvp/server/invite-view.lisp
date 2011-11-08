@@ -10,7 +10,26 @@
  )
 )
 
+(defun rematerialize-object-from-post-data ()
+ (let* ((json-string (octets-to-string (raw-post-data :request *request*) :external-format :utf8)))
+  (decode-json-from-string json-string)
+ )
+)
+
 (defun invite-view-handle-put (invite-id)
+ (with-connection *db-connection-parameters*
+  (let* ((invite (rematerialize-object-from-post-data))
+         (obj (get-dao 'invite (cdr (assoc :id invite)))))
+   (assert (equal (invite-event-id obj) (cdr (assoc :event-id invite))))
+   (setf (invite-last-name obj) (cdr (assoc :last-name invite)))
+   (setf (invite-first-name obj) (cdr (assoc :first-name invite)))
+   (setf (invite-email obj) (cdr (assoc :email invite)))
+   (setf (invite-special obj) (cdr (assoc :special invite)))
+   (setf (invite-responded obj) (cdr (assoc :responded invite)))
+   (update-dao obj)
+   nil
+  )
+ )
 )
 
 (defun invite-view-handle-post (event-id)
