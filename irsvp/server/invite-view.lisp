@@ -23,6 +23,12 @@
 )
 
 (defun invite-view-handle-post (event-id)
+ (let* ((invite (rematerialize-object-from-post-data))
+        (last-name (cdr (assoc :last-name invite)))
+        (first-name (cdr (assoc :first-name invite)))
+        (email (cdr (assoc :email invite))))
+  (invite-controller-create event-id email first-name last-name)
+ )
 )
 
 (defun invite-delete (invite-id)

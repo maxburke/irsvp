@@ -36,7 +36,7 @@
  )
 )
 
-(defun invite-create (event-id email &optional first-name last-name)
+(defun invite-controller-create (event-id email &optional first-name last-name)
  (with-connection *db-connection-parameters*
   (let ((new-invite (make-instance 'invite
                      :event-id event-id

@@ -24,8 +24,8 @@
    (execute (:drop-table 'invite)))
 
   (create-table 'invite)
-  (invite-create 1 "maxburke@gmail.com")
-  (invite-create 1 "monicaweitzel@hotmail.com")
+  (invite-controller-create 1 "maxburke@gmail.com")
+  (invite-controller-create 1 "monicaweitzel@hotmail.com")
  )
 )
 

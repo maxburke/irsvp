@@ -49,7 +49,7 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
     template : _.template(inviteList.Templates.inviteListTemplate),
     events : { 
         'dblclick .entry' : 'edit',
-        'keypress .edit' : 'handleKeypress'
+        'keypress .edit' : 'keypressHandler'
     },
     initialize : function() {
         _.bindAll(this, 'render', 'remove');
@@ -81,7 +81,7 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         this.model.save(newModel);
         this.close();
     },
-    handleKeypress : function(e) {
+    keypressHandler : function(e) {
         if (e.keyCode == 13) {
             this.saveAndClose();
         }
@@ -117,6 +117,9 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
 
 inviteList.Views.inviteListAppView = Backbone.View.extend({
     el : $('#invitelist-app'),
+    events : {
+        "keypress .new-invite" : "appKeypressHandler"
+    },
     initialize : function() {
         _.bindAll(this, 'addEntry', 'addAllEntries');
         inviteList.Data.Invites.bind('add', this.addEntry);
@@ -125,6 +128,10 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
         inviteList.Data.Invites.fetch({ success : function() {
             inviteList.App.addAllEntries();
         } });
+    },
+    appKeypressHandler : function(e) {
+
+        alert("hells yeah!");
     },
     addEntry : function(inviteEntry) {
         var view = new inviteList.Views.InviteEntryView({ model : inviteEntry });
