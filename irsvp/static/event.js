@@ -116,9 +116,9 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
 
 
 inviteList.Views.inviteListAppView = Backbone.View.extend({
-    el : $('#invitelist-app'),
-    events : {
-        "keypress .new-invite" : "appKeypressHandler"
+    el : '#invitelist-app',
+    events : { 
+        'keypress #new-invite' : 'appKeypressHandler'
     },
     initialize : function() {
         _.bindAll(this, 'addEntry', 'addAllEntries');
@@ -130,7 +130,6 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
         } });
     },
     appKeypressHandler : function(e) {
-
         alert("hells yeah!");
     },
     addEntry : function(inviteEntry) {

@@ -45,7 +45,7 @@
         (:div :class "row"
          (:div :class "content-container"
           (:div :id "invitelist-app"
-           (:div :class "new-invite"
+           (:div :id "new-invite"
             (:div :class "new-invite-title"
              (:h2 "Add to the guest list!"))
             (:input :type "text" :id "new-invite-email" :class "invite-email-input" :placeholder "email")
