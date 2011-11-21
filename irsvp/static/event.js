@@ -1,4 +1,5 @@
 var INVITELISTTEMPLATE = '<div class="entry">'
++ '    <span class="delete-entry"><img src="/static/icons/delete-icon.png"/></span>'
 + '    <div class="display">'
 + '        <div class="invite-email"><%= email %></div>'
 + '        <div class="invite-last-name"><%= lastName %></div>'
@@ -49,12 +50,13 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
     template : _.template(inviteList.Templates.inviteListTemplate),
     events : { 
         'dblclick .entry' : 'edit',
-        'keypress .edit' : 'keypressHandler'
+        'keypress .edit' : 'keypressHandler',
+        'click span.delete-entry' : 'clear',
     },
     initialize : function() {
         _.bindAll(this, 'render', 'remove');
-        this.model.bind('change', this.render);
-        this.model.bind('destroy', this.remove);
+        this.model.bind('change', this.render, this);
+        this.model.bind('destroy', this.remove, this);
         this.model.view = this;
     },
     render : function() {
@@ -111,6 +113,9 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
     },
     remove : function() {
         $(this.el).remove();
+    },
+    clear : function() {
+        this.model.destroy();
     }
 });
 
@@ -129,13 +134,42 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
             inviteList.App.addAllEntries();
         } });
     },
+    fillOutRawModel : function() {
+        var email = this.$('#new-invite-email').val();
+        var lastName = this.$('#new-invite-last-name').val();
+        var firstName = this.$('#new-invite-first-name').val();
+        var rawModel = {
+            "eventId" : eventId,
+            "lastName" : lastName,
+            "firstName" : firstName,
+            "email" : email,
+            "special" : "",
+            "responded" : 0
+            };
+        return rawModel;
+    },
+    clearInputFields : function() {
+        this.$('#new-invite-email').val('');
+        this.$('#new-invite-last-name').val('');
+        this.$('#new-invite-first-name').val('');
+    },
+    createNewEntry : function() {
+        var rawModel = this.fillOutRawModel();
+        var result = inviteList.Data.Invites.create(rawModel);
+        if (result != false) {
+            this.clearInputFields();
+            this.addEntry(result);
+        }
+    },
     appKeypressHandler : function(e) {
-        alert("hells yeah!");
+        if (e.keyCode == 13)
+            this.createNewEntry();
     },
     addEntry : function(inviteEntry) {
         var view = new inviteList.Views.InviteEntryView({ model : inviteEntry });
         var parentElement = $('#invite-list');
         parentElement.append(view.render().el);
+        return view;
     },
     addAllEntries : function() {
         inviteList.Data.Invites.each(this.addEntry);
