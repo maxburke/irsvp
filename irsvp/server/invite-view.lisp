@@ -37,11 +37,9 @@
    (let ((invite (get-dao 'invite invite-id)))
     (if invite
      (delete-dao invite)))
-;   (let ((invite (select-dao 'invite (:= 'id invite-id))))
-;    (if invite (delete-dao invite))
-;   )
   )
  )
+ nil
 )
 
 ; /invite/<event id>/<invite id>
