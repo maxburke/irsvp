@@ -48,7 +48,8 @@
    (let* ((id (invite-id new-invite))
           (code (invite-create-code id)))
     (setf (invite-code new-invite) code)
-    (save-dao new-invite))
+    (save-dao new-invite)
+    new-invite)
   )
  )
 )
@@ -63,7 +64,7 @@
    (setf (invite-special obj) (cdr (assoc :special raw-invite)))
    (setf (invite-responded obj) (cdr (assoc :responded raw-invite)))
    (update-dao obj)
-   nil
+   obj
   )
  )
 )

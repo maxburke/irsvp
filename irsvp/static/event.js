@@ -31,6 +31,7 @@ var inviteList = {
 };
 
 inviteList.Models.InviteEntry = Backbone.Model.extend({
+    // TODO: Consider adding a model validation method (overriding Backbone's validate method).
     clear : function() {
         this.destroy();
         this.view.remove();
@@ -127,9 +128,9 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
     },
     initialize : function() {
         _.bindAll(this, 'addEntry', 'addAllEntries');
-        inviteList.Data.Invites.bind('add', this.addEntry);
-        inviteList.Data.Invites.bind('reset', this.addAllEntries);
-        inviteList.Data.Invites.bind('all', this.render);
+        inviteList.Data.Invites.bind('add', this.addEntry, this);
+        inviteList.Data.Invites.bind('reset', this.addAllEntries, this);
+        inviteList.Data.Invites.bind('all', this.render, this);
         inviteList.Data.Invites.fetch({ success : function() {
             inviteList.App.addAllEntries();
         } });
@@ -158,8 +159,10 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
         var result = inviteList.Data.Invites.create(rawModel);
         if (result != false) {
             this.clearInputFields();
-            this.addEntry(result);
         }
+        // TOOD: add handler code for when our model fails validation.
+        // else {
+        // }
     },
     appKeypressHandler : function(e) {
         if (e.keyCode == 13)
