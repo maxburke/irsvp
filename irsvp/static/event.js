@@ -131,9 +131,7 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
         inviteList.Data.Invites.bind('add', this.addEntry, this);
         inviteList.Data.Invites.bind('reset', this.addAllEntries, this);
         inviteList.Data.Invites.bind('all', this.render, this);
-        inviteList.Data.Invites.fetch({ success : function() {
-            inviteList.App.addAllEntries();
-        } });
+        inviteList.Data.Invites.fetch();
     },
     fillOutRawModel : function() {
         var email = this.$('#new-invite-email').val();
