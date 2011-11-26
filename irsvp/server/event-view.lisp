@@ -52,7 +52,8 @@
               (:h2 "Add to the guest list!"))
              (:input :type "text" :id "new-invite-email" :class "invite-email-input" :placeholder "email")
              (:input :type "text" :id "new-invite-last-name" :class "invite-last-name-input" :placeholder "last name")
-             (:input :type "text" :id "new-invite-first-name" :class "invite-first-name-input" :placeholder "first name")))
+             (:input :type "text" :id "new-invite-first-name" :class "invite-first-name-input" :placeholder "first name")
+             (:input :type "text" :id "new-invite-num-guests" :class "invite-num-guests-input" :placeholder "number of guests")))
            (:ul :id "invite-list")))))
        (:footer
         (:p "&copy; fvwsw.com")))

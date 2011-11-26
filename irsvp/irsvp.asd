@@ -27,6 +27,7 @@
        (:file "invite-model")
        (:file "invite-controller")
        (:file "invite-view")
+       (:file "rsvp-view")
       )
     )
   )

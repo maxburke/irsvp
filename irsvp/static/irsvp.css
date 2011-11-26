@@ -73,3 +73,12 @@ body {
 #invite-list .editing .edit {
     display: block;
 }
+
+#rsvp .details,
+#rsvp .hidden {
+    display: none;
+}
+
+#rsvp .validated .details {
+    display: block;
+}

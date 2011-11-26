@@ -1,8 +1,7 @@
 (in-package :irsvp)
 
+(defconstant +not-responded+ -1)
 (defconstant +no+ 0)
-(defconstant +yes+ 1)
-(defconstant +declined+ 2)
 
 (defvar *code-chars* "0123456789abcdefghijklmnopqrstuv")
 (defvar *code-seed* 1918072400) ; FourCC 'rSvP'
@@ -30,19 +29,20 @@
 
 (defun invite-status-to-symbol (status)
  (case status
-  (0 'not-responded)
-  (1 'accepted)
-  (2 'declined)
+  (+not-responded+ 'not-responded)
+  (+no+ 'declined)
+  (otherwise 'yes)
  )
 )
 
-(defun invite-controller-create (event-id email &optional first-name last-name)
+(defun invite-controller-create (event-id email &optional first-name last-name num-guests)
  (with-connection *db-connection-parameters*
   (let ((new-invite (make-instance 'invite
                      :event-id event-id
                      :email email
                      :last-name (or last-name "")
-                     :first-name (or first-name ""))))
+                     :first-name (or first-name "")
+                     :num-guests (or num-guests 1))))
    (insert-dao new-invite)
    ; The invite code can't be calculated until the invite record is created.
    (let* ((id (invite-id new-invite))
@@ -63,6 +63,7 @@
    (setf (invite-email obj) (cdr (assoc :email raw-invite)))
    (setf (invite-special obj) (cdr (assoc :special raw-invite)))
    (setf (invite-responded obj) (cdr (assoc :responded raw-invite)))
+   (setf (invite-num-guests obj) (cdr (assoc :num-guests raw-invite)))
    (update-dao obj)
    obj
   )

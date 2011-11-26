@@ -5,6 +5,7 @@ var INVITELISTTEMPLATE = '<div class="entry">'
 + '        <div class="invite-last-name"><%= lastName %></div>'
 + '        <div class="invite-first-name"><%= firstName %></div>'
 + '        <div class="invite-code"><%= code %></div>'
++ '        <div class="invite-num-guests"></div>'
 + '        <div class="invite-responded"><%= responded %></div>'//<% if (responded == 0) { print("<input type=\"checkbox\" disabled/>"); } else if (responded == 1) { print ("<input type=\"checkbox\" checked disabled/>"); } else { print("Declined"); }%></div>'
 + '        <div class="invite-special"></div>'
 + '    </div>'
@@ -13,6 +14,7 @@ var INVITELISTTEMPLATE = '<div class="entry">'
 + '        <input class="invite-last-name-input" value="" placeholder="last name"/>'
 + '        <input class="invite-first-name-input" value="" placeholder="first name"/>'
 + '        <div class="invite-code"></div>'
++ '        <input class="invite-num-guests-input" value=""/>'
 + '        <input class="invite-responded-input" value=""/>'
 + '        <textarea class="invite-special-input" placeholder="comments and special requests"></textarea>'
 + '    </div>'
@@ -72,6 +74,7 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         var newEmail = this.$('.invite-email-input').val();
         var newLastName = this.$('.invite-last-name-input').val();
         var newFirstName = this.$('.invite-first-name-input').val();
+        var newNumGuests = this.$('.invite-num-guests-input').val();
         var newResponded = this.$('.invite-responded-input').val();
         var newSpecial = this.$('.invite-special-input').val();
         var newModel = {
@@ -79,6 +82,7 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
             lastName : newLastName,
             firstName : newFirstName,
             responded : newResponded,
+            numGuests : newNumGuests,
             special : newSpecial,
         };
         this.model.save(newModel);
@@ -98,6 +102,7 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         var first = this.model.get('firstName');
         var code = this.model.get('code');
         var email = this.model.get('email');
+        var numGuests = this.model.get('numGuests');
         var responded = this.model.get('responded');
         var special = this.model.get('special');
         this.$('.invite-email').text(email);
@@ -107,6 +112,8 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         this.$('.invite-first-name').text(first);
         this.$('.invite-first-name-input').val(first);
         this.$('.invite-code').text(code);
+        this.$('.invite-num-guests').text(numGuests);
+        this.$('.invite-num-guests-input').text(numGuests);
         this.$('.invite-responded').text(responded);
         this.$('.invite-responded-input').val(responded);
         this.$('.invite-special').text(special);
@@ -137,13 +144,15 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
         var email = this.$('#new-invite-email').val();
         var lastName = this.$('#new-invite-last-name').val();
         var firstName = this.$('#new-invite-first-name').val();
+        var numGuests = this.$('#new-invite-num-guests').val();
         var rawModel = {
             "eventId" : eventId,
             "lastName" : lastName,
             "firstName" : firstName,
             "email" : email,
             "special" : "",
-            "responded" : 0
+            "responded" : -1,
+            "numGuests" : numGuests
             };
         return rawModel;
     },
@@ -151,6 +160,7 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
         this.$('#new-invite-email').val('');
         this.$('#new-invite-last-name').val('');
         this.$('#new-invite-first-name').val('');
+        this.$('#new-invite-num-guests').val('');
     },
     createNewEntry : function() {
         var rawModel = this.fillOutRawModel();
