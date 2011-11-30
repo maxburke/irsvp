@@ -32,3 +32,7 @@
   `(log-message *lisp-warnings-log-level* ,str))
  (defmacro server-log (str)))
 
+; Tell Hunchentoot to not handle 404 specially. This lets the server application return
+; a "not found" status code if certain records aren't found, without sending back error
+; text.
+(nconc *approved-return-codes* (list +http-not-found+))

@@ -1,6 +1,15 @@
-function confirmCallback(json) {
-//    $('#rsvp-details').addClass('validated');
-//    $('#rsvp-confirm').addClass('hidden');
+function invalidRsvp(xhr, errorString, exception) {
+    if (xhr.statusCode === 404) {
+        // The rsvp code was invalid.
+    }
+}
+
+function confirmedRsvp(json) {
+    $('#rsvp-email').val(json.email);
+    $('#rsvp-number').val(json.numGuests);
+    $('#rsvp-special').val(json.special);
+    $('#rsvp-details').addClass('validated');
+    $('#rsvp-confirm').addClass('hidden');
 }
 
 function init() {
@@ -11,7 +20,14 @@ function init() {
             documentUrl = documentUrl + "/";
         }
         documentUrl = documentUrl + $('#rsvp-code').val();
-//        $.getJSON("", confirmCallback);
+        var ajaxRequest = {
+            url : documentUrl,
+            type : "GET",
+            dataType : "json",
+            error : invalidRsvp,
+            success : confirmedRsvp
+        };
+        $.ajax(ajaxRequest)
     });
 }
 

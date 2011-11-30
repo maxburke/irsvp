@@ -6,7 +6,7 @@ var INVITELISTTEMPLATE = '<div class="entry">'
 + '        <div class="invite-first-name"><%= firstName %></div>'
 + '        <div class="invite-code"><%= code %></div>'
 + '        <div class="invite-num-guests"></div>'
-+ '        <div class="invite-responded"><%= responded %></div>'//<% if (responded == 0) { print("<input type=\"checkbox\" disabled/>"); } else if (responded == 1) { print ("<input type=\"checkbox\" checked disabled/>"); } else { print("Declined"); }%></div>'
++ '        <div class="invite-responded"><%= responded %></div>'//<% if (responded === 0) { print("<input type=\"checkbox\" disabled/>"); } else if (responded === 1) { print ("<input type=\"checkbox\" checked disabled/>"); } else { print("Declined"); }%></div>'
 + '        <div class="invite-special"></div>'
 + '    </div>'
 + '    <div class="edit">'
@@ -89,7 +89,7 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         this.close();
     },
     keypressHandler : function(e) {
-        if (e.keyCode == 13) {
+        if (e.keyCode === 13) {
             this.saveAndClose();
         }
     },
@@ -173,7 +173,7 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
         // }
     },
     appKeypressHandler : function(e) {
-        if (e.keyCode == 13)
+        if (e.keyCode === 13)
             this.createNewEntry();
     },
     addEntry : function(inviteEntry) {

@@ -26,7 +26,9 @@
      )
      (:div :id "rsvp-details" 
       (:div :class "details"
-       (:h3 "you have been validated!")
+       (:input :id "rsvp-email" :type "text")
+       (:input :id "rsvp-number" :type "text")
+       (:input :id "rsvp-special" :type "text")
       )
      )
     )
@@ -35,7 +37,7 @@
  )
 )
 
-(defconstant +invalid-rsvp+ (json:encode-json-to-string '((:valid . "false"))))
+(defvar *invalid-rsvp* (json:encode-json-to-string '((:valid . "false"))))
 (defun rsvp-view-handle-get (rsvp-code)
  (with-connection *db-connection-parameters*
   (let* ((lowercase-code (string-downcase rsvp-code))
@@ -45,9 +47,9 @@
    ; Check to make sure that there is an invite in the system with the 
    ; provided rsvp code.
    (if (null invite-query)
-    +invalid-rsvp+
-    (json:encode-json-to-string invite
-    )
+    (progn (setf (return-code*) +http-not-found+)
+     *invalid-rsvp*)
+    (json:encode-json-to-string invite)
    )
   )
  )
