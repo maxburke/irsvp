@@ -27,7 +27,7 @@
      (:div :id "rsvp-details" 
       (:div :class "details"
        (:input :id "rsvp-email" :type "text")
-       (:input :id "rsvp-number" :type "text")
+       (:span :id "rsvp-number")
        (:input :id "rsvp-special" :type "text")
       )
      )
