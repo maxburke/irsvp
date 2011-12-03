@@ -11,7 +11,7 @@
         (user-id (session-value 'id *session*)))
   (if (null event-id)
    (redirect "/"))
-  (let (name (event-get-name event-id))
+  (let ((name (event-get-name event-id)))
    (if (not (event-validate-for-user event-id user-id))
     (redirect "/"))
 
