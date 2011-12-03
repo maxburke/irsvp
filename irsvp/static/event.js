@@ -113,7 +113,7 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         this.$('.invite-first-name-input').val(first);
         this.$('.invite-code').text(code);
         this.$('.invite-num-guests').text(numGuests);
-        this.$('.invite-num-guests-input').text(numGuests);
+        this.$('.invite-num-guests-input').val(numGuests);
         this.$('.invite-responded').text(responded);
         this.$('.invite-responded-input').val(responded);
         this.$('.invite-special').text(special);
