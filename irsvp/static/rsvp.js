@@ -1,6 +1,13 @@
 function invalidRsvp(xhr, errorString, exception) {
-    if (xhr.statusCode === 404) {
+    if (xhr.status === 404) {
         // The rsvp code was invalid.
+        $('#modal-header-text').html('<h3>Incorrect RSVP Code</h3>');
+        $('#modal-body-text').html('<p>We looked for that RSVP code but couldn\'t find it. Please double-check that it was entered correctly!</p>');
+        $('#rsvp-status').modal({
+            backdrop: true,
+            keyboard : true,
+            show : true
+        });
     }
 }
 

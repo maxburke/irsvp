@@ -15,21 +15,50 @@
    (:body
     (:script :type "text/javascript" :src "/static/json2.js")
     (:script :type "text/javascript" :src "/static/jquery-1.5.2.js")
+    (:script :type "text/javascript" :src "/static/bootstrap-modal.js")
     (:script :type "text/javascript" :src "/static/rsvp.js")
     (:script :type "text/javascript" "$(function() { init(); });")
 
-    (:h1 "RSVP!")
-    (:div :id "rsvp"
-     (:div :id "rsvp-confirm"
-      (:input :id "rsvp-code" :type "text" :placeholder "RSVP Code")
-      (:input :id "rsvp-submit" :type "submit" :value "Submit")
+    (:div :id "rsvp-status" :class "modal hide fade"
+     (:div :class "modal-header"
+      (:a :class "close" "&times;")
+      (:div :id "modal-header-text")
      )
-     (:div :id "rsvp-details" 
-      (:div :class "details"
-       (:input :id "rsvp-email" :type "text")
-       (:span :id "rsvp-number")
-       (:input :id "rsvp-special" :type "text")
+     (:div :class "modal-body"
+      (:div :id "modal-body-text")
+     )
+     (:div :class "modal-footer"
+      (:button :class "btn close" :type "button" "OK")
+     )
+    )
+    (:div :class "topbar"
+     (:div :class "fill"
+      (:div :class "container"
+       (:ul :class "nav"
+        (:li
+         (:a :href "/" (:img :src "/static/icons/irsvp-72x20.png")))))))
+    (:div :class "container"
+     (:div :class "content"
+      (:div :class "page-header"
+       (:h1 "RSVP!")
       )
+
+      (:div :id "rsvp"
+       (:div :id "rsvp-confirm"
+        (:input :id "rsvp-code" :type "text" :placeholder "RSVP Code")
+        (:input :id "rsvp-submit" :type "submit" :value "Submit")
+       )
+       (:div :id "rsvp-details" 
+        (:div :class "details"
+         (:input :id "rsvp-email" :type "text")
+         (:span :id "rsvp-number")
+         (:input :id "rsvp-special" :type "text")
+        )
+       )
+      )
+
+      (:footer
+       (:p "&copy; fvwsw.com"))
      )
     )
    )
