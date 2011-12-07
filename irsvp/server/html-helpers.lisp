@@ -4,8 +4,48 @@
 
 (defun irsvp-prologue (html-stream page-title)
  (with-html-output (html-stream)
-  (htm (:head (:title (str page-title))
-   (:link :rel "stylesheet" :href "/irsvp.css")))))
+  (htm 
+   (:head (:title (str page-title))
+   )
+  )
+ )
+)
+
+(defmacro with-header (html-stream &body body)
+ `(with-html-output (,html-stream)
+    (htm
+     (:head (:title "iRSVP")
+      (:link :rel "stylesheet" :href "/static/irsvp.css" :media "all" :rel "stylesheet" :type "text/css")
+      (:link :rel "stylesheet" :href "/static/bootstrap.min.css" :media "all" :rel "stylesheet" :type "text/css")
+     )
+     (:body
+      (:div :class "topbar"
+       (:div :class "fill"
+        (:div :class "container"
+         (:ul :class "nav"
+          (:li (:a :href "/" (:img :src "/static/icons/irsvp-72x20.png")))
+          (:li (:a :href "/contact" "Contact Us"))
+          (if *session*
+           (progn
+            (htm
+             (:li (:a :href "/logout" "Log Out"))
+            )
+           )
+           (progn 
+            (htm 
+             (:li (:a :href "/join" "Sign Up"))
+             (:li (:a :href "/login" "Log In"))
+            )
+           )
+          )
+         )
+        )
+       )
+       )
+     ,@body)
+    )
+  )
+)
 
 (defmacro with-header-no-login ((html-stream) &body body)
  `(with-html-output (,html-stream)

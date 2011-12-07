@@ -16,7 +16,27 @@
  )
 )
 
-(defun login-handler ()
+(defun login-handle-get ()
+ (with-html-output-to-string (html-output-string)
+  (with-header html-output-string
+   (:div :class "container"
+    (:div :class "content"
+     (:div :class "content-container"
+      (:form :action "/login" :method "post"
+;       (:label :for "login-email" "email")
+       (:input :type "text" :name "email" :id "login-email")
+;       (:label :for "login-password" "password")
+       (:input :type "password" :name "password" :id "login-password")
+       (:input :type "submit" :value "login" :id "login-submit"))
+      (:div :id "new-membership"
+      "not a user? " 
+      (:a :href "/join" "join now!"))))
+   )
+  )
+ )
+)
+
+(defun login-handle-post ()
  (setf (content-type*) "text/html")
  (with-connection *db-connection-parameters*
   (let ((password (post-parameter "password"))
@@ -32,6 +52,13 @@
      (:html (:body (:h1 "Login failure!"))))
    )
   )
+ )
+)
+
+(defun login-handler ()
+ (let ((req (request-method* *request*)))
+  (cond ((eq req :get) (login-handle-get))
+        ((eq req :post) (login-handle-post)))
  )
 )
 
