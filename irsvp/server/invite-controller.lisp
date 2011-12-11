@@ -22,7 +22,7 @@
                (push (elt *code-chars* fragment) code)
                (recursive-create-code remainder)))
             )))
-   (recursive-create-code (logxor *code-seed* invite-id)))
+   (recursive-create-code (logxor *code-seed* (* 16777619 invite-id))))
   (coerce code 'string)
  )
 )
