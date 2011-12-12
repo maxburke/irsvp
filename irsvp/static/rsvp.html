@@ -1,0 +1,65 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <link href="/static/bootstrap.min.css" media="all" rel="stylesheet" type="text/css"/>
+        <link href="/static/irsvp.css" media="all" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <script type="text/javascript" src="/static/json2.js"></script>
+        <script type="text/javascript" src="/static/jquery-1.5.2.js"></script>
+        <script type="text/javascript" src="/static/bootstrap-modal.js"></script>
+        <script type="text/javascript" src="/static/rsvp.js"></script>
+        <script type="text/javascript">
+            $(function() { init(); });
+        </script>
+
+        <div class="topbar">
+            <div class="fill">
+                <div class="container">
+                    <ul class="nav">
+                        <li><a href="/"><img src="/static/icons/irsvp-72x20.png"/></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="content">
+
+                <form>
+                    <fieldset>
+                        <div class="clearfix">
+                            <label for="rsvp-code">RSVP Code</label>
+                            <div class="input">
+                                <input class="small" id="rsvp-code" type="text"></input>
+                            </div>
+                        </div>
+                        
+                        <div class="clearfix">
+                            <label for="rsvp-email">Email Address</label>
+                            <div class="input">
+                                <input class="xlarge" type="text" id="rsvp-email" disabled></input>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <label for="rsvp-number-box">Attendance</label>
+                            <div class="input">
+                                <select id="rsvp-number-box" disabled>
+                                    <option value="-1" selected="true"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <label for="rsvp-special">Names of those attending, best wishes, special requests, etc.</label>
+                            <div class="input">
+                                <textarea id="rsvp-special" class="xxlarge" rows="3" disabled></textarea>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button id="rsvp-confirm-submit" type="button" class="btn primary disabled">Confirm!</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

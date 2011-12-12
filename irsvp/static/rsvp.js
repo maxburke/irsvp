@@ -1,59 +1,45 @@
-function invalidRsvp(xhr, errorString, exception) {
-    if (xhr.status === 404) {
-        // The rsvp code was invalid.
-        $('#modal-header-text').html('<h3>Incorrect RSVP Code</h3>');
-        $('#modal-body-text').html('<p>We looked for that RSVP code but couldn\'t find it. Please double-check that it was entered correctly!</p>');
-        $('#rsvp-status').modal({
-            backdrop: true,
-            keyboard : true,
-            show : true
-        });
-    }
-}
+documentUrlBase = '';
 
 function confirmedRsvp(json) {
     $('#rsvp-email').val(json.email);
-    var selectionDropdown = 'I <select id="rsvp-number-box">'
+    $('#rsvp-email').removeAttr('disabled');
+
+    var numGuests = json.numGuests;
+    var selectionDropdownText = 
+        '<option value="-1" selected="true"></option>'
         + '<option value="0">will not be coming :(</option>'
         + '<option value="1">will be coming!</option>';
-    for (var i = 1; i < json.numGuests; ++i) {
-        selectionDropdown += '<option value="' 
+    for (var i = 1; i < numGuests; ++i) {
+        selectionDropdownText += '<option value="' 
             + (i + 1) 
             + '">will be coming with ' 
             + i + ' guest' 
             + (i > 1 ? 's' : '')
             + '</option>';
     }
-    selectionDropdown += '</select>';
-    $('#rsvp-number').html(selectionDropdown);
-    $('#rsvp-special').val(json.special);
-    $('#rsvp-details').addClass('validated');
-    $('#rsvp-confirm').addClass('hidden');
+    $('#rsvp-number-box').html(selectionDropdownText);
+    $('#rsvp-number-box').removeAttr('disabled');
+
+    $('#rsvp-special').text(json.special);
+    $('#rsvp-special').removeAttr('disabled');
+
+    $('#rsvp-confirm-submit').removeClass('disabled');
 }
 
-function handleSubmit() {
-    var urlEndIndex = document.URL.length - 1;
-    var documentUrl = document.URL;
-    if (documentUrl[urlEndIndex] != "/") {
-        documentUrl = documentUrl + "/";
-    }
-    documentUrl = documentUrl + $('#rsvp-code').val();
+function handleRsvpKeypress(event) {
+    var code = escape($('#rsvp-code').val());
+    var documentUrl = documentUrlBase + code;
     var ajaxRequest = {
         url : documentUrl,
         type : "GET",
         dataType : "json",
-        error : invalidRsvp,
         success : confirmedRsvp
     };
     $.ajax(ajaxRequest)
 }
 
 function init() {
-    $('#rsvp-code').keypress(function(event) {
-        if (event.which === 13) {
-            handleSubmit();
-        }
-    });
-    $('#rsvp-submit').click(handleSubmit);
+    documentUrlBase = '/rsvp/';
+    $('#rsvp-code').keyup(handleRsvpKeypress);
 }
 
