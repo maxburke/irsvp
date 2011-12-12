@@ -18,7 +18,7 @@
 
 (defun login-handle-get ()
  (with-html-output-to-string (html-output-string)
-  (with-header html-output-string
+  (with-header (html-output-string)
    (:div :class "container"
     (:div :class "content"
      (:div :class "content-container"

@@ -11,12 +11,12 @@
  )
 )
 
-(defmacro with-header (html-stream &body body)
+(defmacro with-header ((html-stream) &body body)
  `(with-html-output (,html-stream)
     (htm
      (:head (:title "iRSVP")
-      (:link :rel "stylesheet" :href "/static/irsvp.css" :media "all" :rel "stylesheet" :type "text/css")
       (:link :rel "stylesheet" :href "/static/bootstrap.min.css" :media "all" :rel "stylesheet" :type "text/css")
+      (:link :rel "stylesheet" :href "/static/irsvp.css" :media "all" :rel "stylesheet" :type "text/css")
      )
      (:body
       (:div :class "topbar"

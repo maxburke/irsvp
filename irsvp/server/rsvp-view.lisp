@@ -1,9 +1,5 @@
 (in-package :irsvp)
 
-(defun report-missing-event-id-error ()
- ; TODO: report missing event ID error
-)
-
 (defun rsvp-view-render ()
  (with-html-output-to-string (html-stream)
   (:html :xmlns "http://www.w3.org/1999/xhtml"
@@ -45,15 +41,66 @@
 
       (:div :id "rsvp"
        (:div :id "rsvp-confirm"
-        (:input :id "rsvp-code" :type "text" :placeholder "RSVP Code")
-        (:input :id "rsvp-submit" :type "submit" :value "Submit")
+        (:form
+         (:fieldset
+          (:div :class "clearfix"
+           (:label :for "rsvp-code" "RSVP Code")
+           (:div :class "input"
+            (:input :class "small" :id "rsvp-code" :size "10" :type "text")
+           )
+          )
+          (:div :class "actions"
+           (:button :id "rsvp-submit" :type "button" :class "btn primary" "Submit")
+          )
+         )
+        )
        )
        (:div :id "rsvp-details" 
         (:div :class "details"
-         (:input :id "rsvp-email" :type "text")
-         (:span :id "rsvp-number")
-         (:input :id "rsvp-special" :type "text")
+         (:form
+          (:fieldset
+           (:div :class "clearfix"
+            (:label :for "rsvp-email" "Please confirm your email address")
+            (:div :id "input"
+             (:input :id "rsvp-email" :type "text" :class "xlarge")
+            )
+           )
+           (:div :class "clearfix"
+            (:label :for "rsvp-number" "Attendance")
+            (:div :id "input"
+             (:span :id "rsvp-number")
+            )
+           )
+           (:div :class "clearfix"
+            (:label :for "rsvp-special" "Names of those attending, best wishes, special requests")
+            (:div :class "input"
+             (:textarea :id "rsvp-special" :class "xxlarge" :rows "3")
+            )
+           )
+           (:div :class "actions"
+            (:button :id "rsvp-confirm-submit" :type "button" :class "btn primary" "Confirm!")
+           )
+          )
+         )
         )
+;        (:div :class "details"
+;         (:ul
+;          (:li
+;           (:label :for "rsvp-email" "Please confirm your email address")
+;           (:input :id "rsvp-email" :type "text")
+;          )
+;          (:li
+;           (:label :for "rsvp-number" "Attendance")
+;           (:span :id "rsvp-number")
+;          )
+;          (:li
+;           (:label :for "rsvp-special" "Names of those attending, best wishes, special requests")
+;           (:input :id "rsvp-special" :type "text")
+;          )
+;          (:li
+;           (:button :id "rsvp-confirm-submit" :type "button" :class "btn primary" "Confirm!")
+;          )
+;         )
        )
       )
 
