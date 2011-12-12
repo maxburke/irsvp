@@ -1,5 +1,14 @@
 (in-package :irsvp)
 
+(defun events-fetch-json (user-id)
+ (with-connection *db-connection-parameters*
+  (let ((records (select-dao 'event (:= 'user-id user-id))))
+    (json:encode-json-to-string records)
+  )
+ )
+)
+
+; TODO: deprecate?
 (defun events-fetch (user-id)
  (with-connection *db-connection-parameters*
   (let ((records (select-dao 'event (:= 'user-id user-id)))
