@@ -51,8 +51,6 @@
             (:button :type "button" :id "new-invite-toggle" :class "btn pull-right" "Hide")
           )
          )
-;         (:div :class "row"
-;          (:div :class "span16"
           (:form :id "new-invite-form"
            (:fieldset
             (:div :class "clearfix"
@@ -86,11 +84,7 @@
             )
            )
           )
-;         )
-;         )
-;         (:div :class "row"
           (:ul :id "invite-list")
-;         )
         )
        (:footer
         (:p "&copy; fvwsw.com")))

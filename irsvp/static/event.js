@@ -193,10 +193,10 @@ function toggleNewInviteBox() {
 
     if (inviteList.newInviteIsShown) {
         buttonText = "Show";
-        $('#new-invite-form').addClass('hidden');
+        $('#new-invite-form').hide();
     } else {
         buttonText = "Hide";
-        $('#new-invite-form').removeClass('hidden');
+        $('#new-invite-form').show();
     }
     inviteList.newInviteIsShown = !inviteList.newInviteIsShown;
     $('#new-invite-toggle').text(buttonText);
