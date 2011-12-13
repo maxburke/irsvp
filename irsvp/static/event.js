@@ -21,6 +21,7 @@ var INVITELISTTEMPLATE = '<div class="entry">'
 + '</div>';
 
 var inviteList = {
+    newInviteIsShown : true,
     Models : { },
     Views : { },
     Collections : { },
@@ -187,6 +188,22 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
     }
 });
 
+function toggleNewInviteBox() {
+    var buttonText = "";
+
+    if (inviteList.newInviteIsShown) {
+        buttonText = "Show";
+        $('#new-invite-form').addClass('hidden');
+    } else {
+        buttonText = "Hide";
+        $('#new-invite-form').removeClass('hidden');
+    }
+    inviteList.newInviteIsShown = !inviteList.newInviteIsShown;
+    $('#new-invite-toggle').text(buttonText);
+}
+
 inviteList.init = function() {
+    inviteList.newInviteIsShown = true;
+    $('#new-invite-toggle').click(toggleNewInviteBox);
     inviteList.App = new inviteList.Views.inviteListAppView ();
 }

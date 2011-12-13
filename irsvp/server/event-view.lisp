@@ -44,20 +44,57 @@
        (:div :class "content"
         (:div :class "page-header"
          (:h1 (str name))
+        )
          (:div :class "row"
-          (:div :class "content-container"
-           (:div :id "invitelist-app"
-            (:div :id "new-invite"
-             (:div :class "new-invite-title"
-              (:h2 "Add to the guest list!"))
-             (:input :type "text" :id "new-invite-email" :class "invite-email-input" :placeholder "email")
-             (:input :type "text" :id "new-invite-last-name" :class "invite-last-name-input" :placeholder "last name")
-             (:input :type "text" :id "new-invite-first-name" :class "invite-first-name-input" :placeholder "first name")
-             (:input :type "text" :id "new-invite-num-guests" :class "invite-num-guests-input" :placeholder "number of guests")))
-           (:ul :id "invite-list")))))
+          (:div :class "span10" (:h2 "Add a new guest!"))
+          (:div :class "span4" 
+            (:button :type "button" :id "new-invite-toggle" :class "btn pull-right" "Hide")
+          )
+         )
+;         (:div :class "row"
+;          (:div :class "span16"
+          (:form :id "new-invite-form"
+           (:fieldset
+            (:div :class "clearfix"
+             (:label :for "new-invite-email" "Guest contact email")
+             (:div :class "input"
+              (:input :class "xlarge" :id "new-invite-email" :type "text" :placeholder "joesmith@hotmail.com")
+             )
+            )
+            (:div :class "clearfix"
+             (:label :for "new-invite-email" "First name")
+             (:div :class "input"
+              (:input :class "xlarge" :id "new-invite-first-name" :type "text" :placeholder "Joe")
+             )
+            )
+            (:div :class "clearfix"
+             (:label :for "new-invite-email" "Last name")
+             (:div :class "input"
+              (:input :class "xlarge" :id "new-invite-last-name" :type "text" :placeholder "Smith")
+             )
+            )
+            (:div :class "clearfix"
+             (:label :for "new-invite-email" "Number of guests")
+             (:div :class "input"
+              (:input :class "mini" :id "new-invite-num-guests" :type "text" :placeholder "17")
+             )
+            )
+            (:div :class "actions"
+             (:button :type "button" :class "btn primary" "Add guest")
+             " "
+             (:button :type "button" :class "btn" "Cancel")
+            )
+           )
+          )
+;         )
+;         )
+;         (:div :class "row"
+          (:ul :id "invite-list")
+;         )
+        )
        (:footer
         (:p "&copy; fvwsw.com")))
-     )
+      )
     )
    )
   )
