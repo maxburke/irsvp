@@ -24,7 +24,7 @@ function successCallback(json) {
 }
 
 function init() {
-    var documentUrl = "/home";
+    var documentUrl = "/data/home";
     var ajaxRequest = {
         url : documentUrl,
         type : "GET",

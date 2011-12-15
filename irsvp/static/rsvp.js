@@ -39,7 +39,7 @@ function handleRsvpKeypress(event) {
 }
 
 function init() {
-    documentUrlBase = '/rsvp/';
+    documentUrlBase = '/data/rsvp/';
     $('#rsvp-code').keyup(handleRsvpKeypress);
 }
 

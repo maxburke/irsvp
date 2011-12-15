@@ -88,4 +88,7 @@
      (with-header-and-footer (,title)
       ,@body)))
 
-
+(defun html-404-handler ()
+ (setf (return-code*) +http-not-found+)
+ "Lost? Can we help you find your way back? (TODO: 404 handler!)"
+)
