@@ -57,7 +57,7 @@
   `(let ((,var (raw-login-data)))
     (if (null ,var)
      (progn (setf (return-code*) +http-bad-request+)
-            (create-failure-response "It seems like you missed your email address or password!")); (format nil "It seems like you missed your email address or password! ~a" ,var)))
+            (create-failure-response "It seems like you missed your email address or password!"))
      (progn (multiple-value-bind (,email ,password ,password-verify) (extract-login-data ,var)
       ,@body))
     )
@@ -82,7 +82,7 @@
  )
 )
 
-(defun login-handle-get ()
+(defun login-handle-put ()
  (if *session*
   *successful-login-response*
   (with-connection *db-connection-parameters*
@@ -105,14 +105,14 @@
          *successful-login-response*
   )
   (progn (setf (return-code*) +http-bad-request+)
-         (create-failure-response "No valid session currently exists!"))
+         (create-failure-response "I don't think you're logged in!"))
  )
 )
 
 (defun login-handler ()
  (let ((req (request-method* *request*)))
   (cond ((eq req :post) (login-handle-post))
-        ((eq req :get) (login-handle-get))
+        ((eq req :put) (login-handle-put))
         ((eq req :delete) (login-handle-delete))
   )
  )
