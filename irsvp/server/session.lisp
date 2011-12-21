@@ -109,7 +109,7 @@
  )
 )
 
-(defun login-handler ()
+(defun sessions-handler ()
  (let ((req (request-method* *request*)))
   (cond ((eq req :post) (login-handle-post))
         ((eq req :put) (login-handle-put))
@@ -118,11 +118,10 @@
  )
 )
 
-(defun logout-handler ()
+(defun login-handler ()
  (if *session*
-  (progn (delete-session-value 'id)
-   (remove-session *session*)))
- (redirect "/")
+  (redirect "/home")
+  (handle-static-file #p"static/login.html")
+ )
 )
-
 

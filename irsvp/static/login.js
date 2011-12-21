@@ -55,7 +55,14 @@ function submit() {
     $.ajax(ajaxRequest)
 }
 
+function submitOnEnter(e) {
+    if (e.charCode == 13) {
+        submit();
+    }
+}
+
 function init() {
     $('#new').click(showJoinForm);
     $('#submit').click(submit);
+    $('#login-form').keypress(submitOnEnter);
 }

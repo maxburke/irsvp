@@ -37,10 +37,8 @@
  (setf *dispatch-table*
   (nconc (list 'dispatch-easy-handlers
           (create-folder-dispatcher-and-handler "/static/" #p"static/")
-          (create-static-file-dispatcher-and-handler "/login" #p"static/login.html")
-          (create-prefix-dispatcher "/sessions" 'login-handler)
-          (create-prefix-dispatcher "/logout" 'logout-handler)
-          (create-prefix-dispatcher "/join" 'join-handler)
+          (create-prefix-dispatcher "/login" 'login-handler)
+          (create-prefix-dispatcher "/sessions" 'sessions-handler)
           (create-static-file-dispatcher-and-handler "/home" #p"static/home.html")
           (create-prefix-dispatcher "/data/home" 'home-view)
           (create-prefix-dispatcher "/data/rsvp" (uri-dispatcher #'rsvp-view))
