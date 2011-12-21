@@ -17,6 +17,7 @@ var INVITELISTTEMPLATE = '<div class="entry">'
 + '        <input class="invite-num-guests-input" value=""/>'
 + '        <input class="invite-responded-input" value=""/>'
 + '        <textarea class="invite-special-input" placeholder="comments and special requests"></textarea>'
++ '        <button class="invite-submit-changes btn primary" type="button">Submit</button>'
 + '    </div>'
 + '</div>';
 
@@ -56,6 +57,7 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         'dblclick .entry' : 'edit',
         'keypress .edit' : 'keypressHandler',
         'click span.delete-entry' : 'clear',
+        'click .invite-submit-changes' : 'saveAndClose'
     },
     initialize : function() {
         _.bindAll(this, 'render', 'remove');
@@ -202,8 +204,23 @@ function toggleNewInviteBox() {
     $('#new-invite-toggle').text(buttonText);
 }
 
+function addHandler() {
+    inviteList.App.createNewEntry();
+}
+
+function cancelHandler() {
+    $('#new-invite-email').val('');
+    $('#new-invite-first-name').val('');
+    $('#new-invite-last-name').val('');
+    $('#new-invite-num-guests').val('');
+}
+
 inviteList.init = function() {
     inviteList.newInviteIsShown = true;
     $('#new-invite-toggle').click(toggleNewInviteBox);
+
+    $('#cancel').click(cancelHandler);
+    $('#add-guest').click(addHandler);
+
     inviteList.App = new inviteList.Views.inviteListAppView ();
 }

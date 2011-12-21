@@ -51,7 +51,8 @@
             (:button :type "button" :id "new-invite-toggle" :class "btn pull-right" "Hide")
           )
          )
-          (:form :id "new-invite-form"
+         (:div :id "invitelist-app"
+          (:form :id "new-invite"
            (:fieldset
             (:div :class "clearfix"
              (:label :for "new-invite-email" "Guest contact email")
@@ -60,31 +61,32 @@
              )
             )
             (:div :class "clearfix"
-             (:label :for "new-invite-email" "First name")
+             (:label :for "new-invite-first-name" "First name")
              (:div :class "input"
               (:input :class "xlarge" :id "new-invite-first-name" :type "text" :placeholder "Joe")
              )
             )
             (:div :class "clearfix"
-             (:label :for "new-invite-email" "Last name")
+             (:label :for "new-invite-last-name" "Last name")
              (:div :class "input"
               (:input :class "xlarge" :id "new-invite-last-name" :type "text" :placeholder "Smith")
              )
             )
             (:div :class "clearfix"
-             (:label :for "new-invite-email" "Number of guests")
+             (:label :for "new-invite-num-guests" "Number of guests")
              (:div :class "input"
               (:input :class "mini" :id "new-invite-num-guests" :type "text" :placeholder "17")
              )
             )
             (:div :class "actions"
-             (:button :type "button" :class "btn primary" "Add guest")
+             (:button :type "button" :class "btn primary" :id "add-guest" "Add guest")
              " "
-             (:button :type "button" :class "btn" "Cancel")
+             (:button :type "button" :class "btn" :id "cancel" "Cancel")
             )
            )
           )
-          (:ul :id "invite-list")
+         )
+        (:ul :id "invite-list")
         )
        (:footer
         (:p "&copy; fvwsw.com")))
