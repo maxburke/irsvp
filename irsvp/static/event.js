@@ -18,6 +18,7 @@ var INVITELISTTEMPLATE = '<div class="entry">'
 + '        <input class="invite-responded-input" value=""/>'
 + '        <textarea class="invite-special-input" placeholder="comments and special requests"></textarea>'
 + '        <button class="invite-submit-changes btn primary" type="button">Submit</button>'
++ '        <button class="invite-cancel-changes btn" type="button">Cancel</button>'
 + '    </div>'
 + '</div>';
 
@@ -57,7 +58,8 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         'dblclick .entry' : 'edit',
         'keypress .edit' : 'keypressHandler',
         'click span.delete-entry' : 'clear',
-        'click .invite-submit-changes' : 'saveAndClose'
+        'click .invite-submit-changes' : 'saveAndClose',
+        'click .invite-cancel-changes' : 'cancel'
     },
     initialize : function() {
         _.bindAll(this, 'render', 'remove');
@@ -72,6 +74,16 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
     },
     close : function() {
         $(this.el).removeClass('editing');
+    },
+    cancel : function() {
+        this.$('.invite-email-input').val(this.model.get('email'));
+        this.$('.invite-last-name-input').val(this.model.get('lastName'));
+        this.$('.invite-first-name-input').val(this.model.get('firstName'));
+        this.$('.invite-responded-input').val(this.model.get('responded'));
+        this.$('.invite-num-guests-input').val(this.model.get('numGuests'));
+        this.$('.invite-special-input').val(this.model.get('special'));
+
+        this.close();
     },
     saveAndClose : function() {
         var newEmail = this.$('.invite-email-input').val();
@@ -104,7 +116,6 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         var last = this.model.get('lastName');
         var first = this.model.get('firstName');
         var code = this.model.get('code');
-        var email = this.model.get('email');
         var numGuests = this.model.get('numGuests');
         var responded = this.model.get('responded');
         var special = this.model.get('special');
@@ -195,10 +206,10 @@ function toggleNewInviteBox() {
 
     if (inviteList.newInviteIsShown) {
         buttonText = "Show";
-        $('#new-invite-form').hide();
+        $('#invitelist-app').hide();
     } else {
         buttonText = "Hide";
-        $('#new-invite-form').show();
+        $('#invitelist-app').show();
     }
     inviteList.newInviteIsShown = !inviteList.newInviteIsShown;
     $('#new-invite-toggle').text(buttonText);
