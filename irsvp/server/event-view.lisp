@@ -52,6 +52,7 @@
           )
          )
          (:div :id "invitelist-app"
+          (:div :class "alert-message hidden" :id "new-invite-status")
           (:form :id "new-invite"
            (:fieldset
             (:div :class "clearfix"

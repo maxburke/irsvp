@@ -30,6 +30,8 @@ var inviteList = {
     Data : { },
     App : { },
     Templates : { inviteListTemplate : INVITELISTTEMPLATE },
+    totalInvited : 0,
+    totalConfirmed : 0,
     init : function() {
         return null;
     }
@@ -41,6 +43,9 @@ inviteList.Models.InviteEntry = Backbone.Model.extend({
         this.destroy();
         this.view.remove();
         return null;
+    },
+    validate : function(model) {
+        return model.email.indexOf("@") === -1;
     }
 });
 
@@ -179,12 +184,13 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
     createNewEntry : function() {
         var rawModel = this.fillOutRawModel();
         var result = inviteList.Data.Invites.create(rawModel);
-        if (result != false) {
+        if (result !== false) {
             this.clearInputFields();
         }
-        // TOOD: add handler code for when our model fails validation.
-        // else {
-        // }
+        else {
+            $('#new-invite-status').text("Please fix the email address below!");
+            $('#new-invite-status').show();
+        }
     },
     appKeypressHandler : function(e) {
         if (e.keyCode === 13)
@@ -224,6 +230,7 @@ function cancelHandler() {
     $('#new-invite-first-name').val('');
     $('#new-invite-last-name').val('');
     $('#new-invite-num-guests').val('');
+    $('#new-invite-status').hide();
 }
 
 inviteList.init = function() {
