@@ -86,3 +86,15 @@ body {
 .hidden {
     display: none;
 }
+
+li { 
+    list-style : none;
+}
+
+div .entry {
+    padding: 10px;
+}
+
+div .invite-last-name {
+float : left;
+}

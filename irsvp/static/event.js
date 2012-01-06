@@ -5,9 +5,9 @@ var INVITELISTTEMPLATE = '<div class="entry">'
 + '        <div class="invite-last-name"><%= lastName %></div>'
 + '        <div class="invite-first-name"><%= firstName %></div>'
 + '        <div class="invite-code"><%= code %></div>'
-+ '        <div class="invite-num-guests"></div>'
-+ '        <div class="invite-responded"><%= responded %></div>'//<% if (responded === 0) { print("<input type=\"checkbox\" disabled/>"); } else if (responded === 1) { print ("<input type=\"checkbox\" checked disabled/>"); } else { print("Declined"); }%></div>'
-+ '        <div class="invite-special"></div>'
++ '        <div class="invite-num-guests"><%= numGuests %></div>'
++ '        <div class="invite-responded"><%= (responded === -1 ? "Tentative" : (responded === 0 ? "Declined" : responded)) %></div>'
++ '        <div class="invite-special"><%= special %></div>'
 + '    </div>'
 + '    <div class="edit">'
 + '        <input class="invite-email-input" value="" placeholder="email"/>'
@@ -73,6 +73,7 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         this.model.view = this;
     },
     render : function() {
+        alert("Problem: the JSON model created in saveAndClose needs to have the numeric fields (responded/numGuests) converted to numbers from strings. Look up how to do this.");
         $(this.el).html(this.template(this.model.toJSON()));
         this.updateFields();
         return this;
@@ -124,18 +125,11 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         var numGuests = this.model.get('numGuests');
         var responded = this.model.get('responded');
         var special = this.model.get('special');
-        this.$('.invite-email').text(email);
         this.$('.invite-email-input').val(email);
-        this.$('.invite-last-name').text(last);
         this.$('.invite-last-name-input').val(last);
-        this.$('.invite-first-name').text(first);
         this.$('.invite-first-name-input').val(first);
-        this.$('.invite-code').text(code);
-        this.$('.invite-num-guests').text(numGuests);
         this.$('.invite-num-guests-input').val(numGuests);
-        this.$('.invite-responded').text(responded);
         this.$('.invite-responded-input').val(responded);
-        this.$('.invite-special').text(special);
         this.$('.invite-special-input').val(special);
     },
     remove : function() {
