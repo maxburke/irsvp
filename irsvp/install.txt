@@ -1,0 +1,22 @@
+Install postgres 9.1
+    sudo aptitude install postgresql-9.1
+Install postgres-contrib-9.1
+    sudo aptitude install postgresql-contrib-9.1
+Create database irsvp
+    createdb irsvp
+Add user irsvp
+    createuser irsvp
+Install SBCL
+    sudo aptitude install sbcl
+Install Quicklisp:
+    wget http://beta.quicklisp.org/quicklisp.lisp
+    sbcl --load quicklisp.lisp
+
+Run this at the REPL:
+    (ql:quickload "cl-json")
+    (ql:quickload "hunchentoot")
+    (ql:quickload "postmodern")
+    (ql:quickload "cl-who")
+    (require 'irsvp)
+    (irsvp:create-schema)
+
