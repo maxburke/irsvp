@@ -5,7 +5,7 @@
 
 (defsystem "irsvp"
  :serial t
- :depends-on (:hunchentoot :cl-who :postmodern :cl-json)
+ :depends-on (:hunchentoot :cl-who :postmodern :cl-json :cl-smtp)
  :components (
    (:module :server
     :serial t
@@ -28,6 +28,7 @@
        (:file "invite-controller")
        (:file "invite-view")
        (:file "rsvp-view")
+       (:file "beta")
       )
     )
   )
