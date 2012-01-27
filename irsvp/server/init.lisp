@@ -30,7 +30,7 @@
   (stop *server-instance*))
 
  (setf *server-instance* 
-  (make-instance 'acceptor :port 8000))
+  (make-instance 'easy-acceptor :port 8000))
 
  (start *server-instance*)
 
