@@ -1,11 +1,9 @@
 (in-package :irsvp)
 
 (defun index-handler ()
- (with-html-output-to-string (html-stream)
-  (with-header (html-stream)
-   (:h1 "hello world!")
-  )
+ (if *session*
+  (redirect "/home")
+  (handle-static-file #p"static/index.html")
  )
 )
-
 
