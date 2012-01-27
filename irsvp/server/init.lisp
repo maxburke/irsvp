@@ -39,11 +39,13 @@
           (create-folder-dispatcher-and-handler "/static/" #p"static/")
           (create-prefix-dispatcher "/login" 'login-handler)
           (create-prefix-dispatcher "/sessions" 'sessions-handler)
+          (create-static-file-dispatcher-and-handler "/favicon.ico" #p"static/favicon.ico")
           (create-static-file-dispatcher-and-handler "/home" #p"static/home.html")
           (create-prefix-dispatcher "/data/home" 'home-view)
           (create-prefix-dispatcher "/data/rsvp" (uri-dispatcher #'rsvp-view))
           (create-prefix-dispatcher "/event" (uri-dispatcher #'event-view))
           (create-prefix-dispatcher "/invite" (uri-dispatcher #'invite-view))
+          (create-prefix-dispatcher "/beta" 'beta-handler)
           (create-static-file-dispatcher-and-handler "/rsvp" #p"static/rsvp.html")
           (create-prefix-dispatcher "/" 'index-handler)
           ; TODO:
