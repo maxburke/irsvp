@@ -3,7 +3,7 @@
 ;;;
 (defun report-failure-message (html-stream join-failure-cause)
  (if (not (eq join-failure-cause 'none))
-  (with-html-output (html-stream)
+  (with-html-output (html-stream nil :prologue t)
    (:div :id "error-box"
     (:h2 "There seems to have been a problem!"))
    (:div :id "error-message"
@@ -35,7 +35,7 @@
 
 ;;;
 (defun render-join-page (join-failure-cause)
- (with-html-output-to-string (html-stream)
+ (with-html-output-to-string (html-stream nil :prologue t)
   (:html
    (irsvp-prologue html-stream "iRSVP - Join!")
    (with-header-no-login (html-stream)

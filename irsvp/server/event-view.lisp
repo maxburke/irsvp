@@ -15,7 +15,7 @@
    (if (not (event-validate-for-user event-id user-id))
     (redirect "/"))
 
-   (with-html-output-to-string (html-stream)
+   (with-html-output-to-string (html-stream nil :prologue t)
     (:html :xmlns "http://www.w3.org/1999/xhtml"
      (:head
       (:link :href "/static/jquery-ui-1.8.14.custom.css" :media "all" :rel "stylesheet" :type "text/css")
