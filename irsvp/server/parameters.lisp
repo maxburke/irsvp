@@ -2,7 +2,10 @@
 
 (defvar *server-instance* nil)
 (defvar *irsvp-index* #p"/home/max/src/lisp/irsvp/index.html")
-(defvar *db-connection-parameters* (list "irsvp" "irsvp" "irsvp" "localhost" :pooled-p t))
+
+; poooled parameter was commented out because stale pooled connections were raising
+; conditions.
+(defvar *db-connection-parameters* (list "irsvp" "irsvp" "irsvp" "localhost")); :pooled-p t))
 
 ;; Encode the user agent into the session secret so that a new session is required if this changes.
 (setf *use-user-agent-for-sessions* t)
@@ -15,7 +18,6 @@
 
 ; These three should be *off* for release.
 (setf *show-lisp-errors-p* t)
-(setf *message-log-pathname* #p"/Users/max/src/lisp/irsvp/logs/message.log")
 (setf *access-log-pathname* #p"/Users/max/src/lisp/irsvp/logs/access.log")
 (defvar *irsvp-debug* t)
 
@@ -35,4 +37,6 @@
 ; Tell Hunchentoot to not handle 404 specially. This lets the server application return
 ; a "not found" status code if certain records aren't found, without sending back error
 ; text.
-(nconc *approved-return-codes* (list +http-not-found+))
+
+; Not needed with Hunchentoot 1.2.x
+; (nconc *approved-return-codes* (list +http-not-found+))
