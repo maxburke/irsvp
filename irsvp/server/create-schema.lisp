@@ -1,6 +1,8 @@
 (in-package :irsvp)
     
-(defvar *db-connection-parameters* (list "irsvp" "irsvp" "irsvp" "localhost" :pooled-p t))
+; poooled parameter was commented out because stale pooled connections were raising
+; conditions.
+(defvar *db-connection-parameters* (list "irsvp" "irsvp" "irsvp" "localhost")); :pooled-p t))
 
 (defun create-schema ()
  (with-connection *db-connection-parameters*
