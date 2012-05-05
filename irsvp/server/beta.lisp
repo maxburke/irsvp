@@ -1,7 +1,5 @@
 (in-package :irsvp)
 
-(cl-smtp:send-email "smtp.gmail.com" "inbox@irsvp.cc" "maxburke@gmail.com" "Welcome to iRSVP!" "Welcome to iRSVP! We are in beta." :ssl :tls :authentication '(:login "inbox@irsvp.cc" "W0zixege"))
-
 (defun beta-handler ()
  (let* ((raw-json-string (octets-to-string (raw-post-data :request *request*) :external-format :utf8))
         (json-string (if (or (null raw-json-string) (string= raw-json-string ""))
