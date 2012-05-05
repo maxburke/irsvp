@@ -87,6 +87,10 @@
            )
           )
          )
+         (:center
+          (:div :class "row"
+           (:div :class "span14" (:span :id "num-invited-and-confirmed"))))
+           
         (:ul :id "invite-list")
         )
        (:footer

@@ -1,18 +1,21 @@
 var INVITELISTTEMPLATE = '<div class="entry">'
 + '    <span class="delete-entry"><img src="/static/icons/delete-icon.png"/></span>'
 + '    <div class="display">'
-+ '        <div class="invite-email"><%= email %></div>'
-+ '        <div class="invite-last-name"><%= lastName %></div>'
-+ '        <div class="invite-first-name"><%= firstName %></div>'
-+ '        <div class="invite-code"><%= code %></div>'
-+ '        <div class="invite-num-guests"><%= numGuests %></div>'
-+ '        <div class="invite-responded"><%= (responded === -1 ? "Tentative" : (responded === 0 ? "Declined" : responded)) %></div>'
++ '        <div class="display-first-line">'
++ '            <div class="invite-last-name"><%= lastName %></div>'
++ '            <div class="invite-first-name"><%= firstName %></div>'
++ '            <div class="invite-responded"><%= (responded === -1 ? "Tentative" : (responded === 0 ? "Declined" : responded + " confirmed")) %></div>'
++ '        </div>'
++ '        <div>'
++ '            <div class="invite-code"><%= code %></div>'
++ '            <div class="invite-email"><%= email %></div>'
++ '        </div>'
 + '        <div class="invite-special"><%= special %></div>'
 + '    </div>'
 + '    <div class="edit">'
-+ '        <input class="invite-email-input" value="" placeholder="email"/>'
 + '        <input class="invite-last-name-input" value="" placeholder="last name"/>'
 + '        <input class="invite-first-name-input" value="" placeholder="first name"/>'
++ '        <input class="invite-email-input" value="" placeholder="email"/>'
 + '        <div class="invite-code"></div>'
 + '        <input class="invite-num-guests-input" value=""/>'
 + '        <input class="invite-responded-input" value=""/>'
@@ -73,7 +76,7 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         this.model.view = this;
     },
     render : function() {
-        alert("Problem: the JSON model created in saveAndClose needs to have the numeric fields (responded/numGuests) converted to numbers from strings. Look up how to do this.");
+//        alert("Problem: the JSON model created in saveAndClose needs to have the numeric fields (responded/numGuests) converted to numbers from strings. Look up how to do this.");
         $(this.el).html(this.template(this.model.toJSON()));
         this.updateFields();
         return this;
@@ -95,8 +98,18 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         var newEmail = this.$('.invite-email-input').val();
         var newLastName = this.$('.invite-last-name-input').val();
         var newFirstName = this.$('.invite-first-name-input').val();
+
+        var oldNumGuests = this.model.get('numGuests');
         var newNumGuests = this.$('.invite-num-guests-input').val();
+        var oldResponded = this.model.get('responded');
         var newResponded = this.$('.invite-responded-input').val();
+
+        inviteList.totalInvited += parseInt(newNumGuests) - parseInt(oldNumGuests);
+        var oldRespondedForTotal = parseInt(oldResponded) > 0 ? parseInt(oldResponded) : 0;
+        var newRespondedForTotal = parseInt(newResponded) > 0 ? parseInt(newResponded) : 0;
+        inviteList.totalConfirmed += newRespondedForTotal - oldRespondedForTotal;
+        updateInviteCounts();
+
         var newSpecial = this.$('.invite-special-input').val();
         var newModel = {
             email : newEmail,
@@ -180,6 +193,7 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
         var result = inviteList.Data.Invites.create(rawModel);
         if (result !== false) {
             this.clearInputFields();
+	    $('#new-invite-status').hide();
         }
         else {
             $('#new-invite-status').text("Please fix the email address below!");
@@ -194,6 +208,17 @@ inviteList.Views.inviteListAppView = Backbone.View.extend({
         var view = new inviteList.Views.InviteEntryView({ model : inviteEntry });
         var parentElement = $('#invite-list');
         parentElement.append(view.render().el);
+
+        if (inviteEntry.get("numGuests") > 0) {
+            inviteList.totalInvited += parseInt(inviteEntry.get("numGuests"));
+            updateInviteCounts();
+        }
+
+        if (inviteEntry.get("responded") > 0) {
+            inviteList.totalConfirmed += parseInt(inviteEntry.get("responded"));
+            updateInviteCounts();
+        }
+
         return view;
     },
     addAllEntries : function() {
@@ -235,4 +260,15 @@ inviteList.init = function() {
     $('#add-guest').click(addHandler);
 
     inviteList.App = new inviteList.Views.inviteListAppView ();
+    updateInviteCounts();
 }
+
+updateInviteCounts = function() {
+    $('#num-invited-and-confirmed').html(
+            "<h2>"
+            + inviteList.totalInvited.toString()
+            + " invited, "
+            + inviteList.totalConfirmed.toString()
+            + " confirmed" + "</h2>");
+}
+
