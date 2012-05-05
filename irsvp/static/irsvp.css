@@ -35,6 +35,25 @@ body {
     border: 0;
 }
 
+.entry {
+clear: left;
+}
+
+.delete-entry {
+width: 32px;
+float: left;
+}
+
+.display {
+width:720px;
+float: left;
+}
+
+.display-first-line {
+}
+
+.invite-last-name { margin-right: 10px; }
+.invite-first-name { margin-right : 10px; float:left; }
 .invite-email-input {
     margin: 10px;
 }
