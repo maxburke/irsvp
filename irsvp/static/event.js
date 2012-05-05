@@ -149,7 +149,9 @@ inviteList.Views.InviteEntryView = Backbone.View.extend({
         $(this.el).remove();
     },
     clear : function() {
-        this.model.destroy();
+// Temporarily disabled so that I don't screw up the wedding invite list
+// :). This should prompt the user for confirmation first.
+//        this.model.destroy();
     }
 });
 
