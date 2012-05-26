@@ -47,9 +47,9 @@ inviteList.Models.InviteEntry = Backbone.Model.extend({
         this.view.remove();
         return null;
     },
-    validate : function(model) {
-        return model.email.indexOf("@") === -1;
-    }
+//    validate : function(model) {
+//        return model.email.indexOf("@") === -1;
+//    }
 });
 
 inviteList.Collections.InviteCollection = Backbone.Collection.extend({
