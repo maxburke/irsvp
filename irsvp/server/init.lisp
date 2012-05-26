@@ -32,6 +32,7 @@
  (setf *server-instance* 
   (make-instance 'easy-acceptor :port 8000))
 
+ (setf (acceptor-message-log-destination *server-instance*) #p"/home/ubuntu/src/irsvp/logs/message.log")
  (start *server-instance*)
 
  (setf *dispatch-table*
@@ -47,6 +48,7 @@
           (create-prefix-dispatcher "/invite" (uri-dispatcher #'invite-view))
           (create-prefix-dispatcher "/beta" 'beta-handler)
           (create-static-file-dispatcher-and-handler "/rsvp" #p"static/rsvp.html")
+          (create-prefix-dispatcher "/contact" 'contact-handler)
           (create-prefix-dispatcher "/" 'index-handler)
           ; TODO:
           ; Add special pages (ie, /500, /404) that have custom error messages for certain conditions.
