@@ -1,5 +1,23 @@
 documentUrlBase = '';
 
+function handleSelectionChange(event) {
+    if (parseInt($(this).val()) !== -1) {
+        $('#attendance-confirmed').html('<img src="/static/icons/check.jpg"/>');
+    } else {
+        $('#attendance-confirmed').html('<span></span>');
+    }
+}
+
+function handleEmailKeypress(event) {
+    var text = $('#rsvp-email').val();
+    var expression = /.+@.+\..+/;
+    if (text.search(expression) != -1) {
+        $('#email-confirmed').html('<img src="/static/icons/check.jpg"/>');
+    } else {
+        $('#email-confirmed').html('');
+    }
+}
+
 function confirmedRsvp(json) {
     $('#rsvp-email').val(json.email);
     $('#rsvp-email').removeAttr('disabled');
@@ -15,15 +33,20 @@ function confirmedRsvp(json) {
             + '">will be coming with ' 
             + i + ' guest' 
             + (i > 1 ? 's' : '')
-            + '</option>';
+            + '!</option>';
     }
     $('#rsvp-number-box').html(selectionDropdownText);
     $('#rsvp-number-box').removeAttr('disabled');
+    $('#rsvp-number-box').change(handleSelectionChange);
 
     $('#rsvp-special').text(json.special);
     $('#rsvp-special').removeAttr('disabled');
 
     $('#rsvp-confirm-submit').removeClass('disabled');
+
+    $('#code-confirmed').html('<img src="/static/icons/check.jpg"/>');
+    handleEmailKeypress();
+    $('#rsvp-email').keyup(handleEmailKeypress);
 }
 
 function handleRsvpKeypress(event) {
