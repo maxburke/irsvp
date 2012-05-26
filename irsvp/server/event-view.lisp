@@ -38,7 +38,9 @@
          (:a :href "/" :class "brand" "iRSVP")
          (:ul :class "nav"
           (:li (:a :href "/home" "Home"))
-          (:li :class "active" (:a :href (str (request-uri* *request*)) (str name)))))))
+          (:li :class "active" (:a :href (str (request-uri* *request*)) (str name)))
+          (:li (:a :href "/contact" "Contact Us"))
+          (:li (:a :href "/logout" "Log Out"))))))
  
       (:div :class "container"
        (:div :class "content"
@@ -94,7 +96,7 @@
         (:ul :id "invite-list")
         )
        (:footer
-        (:p "&copy; fvwsw.com")))
+        (:p "&copy; irsvp.cc")))
       )
     )
    )

@@ -125,3 +125,7 @@
  )
 )
 
+(defun logout-handler ()
+ (login-handle-delete)
+ (redirect "/")
+)

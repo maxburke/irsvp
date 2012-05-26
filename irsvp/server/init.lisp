@@ -39,6 +39,7 @@
   (nconc (list 'dispatch-easy-handlers
           (create-folder-dispatcher-and-handler "/static/" #p"static/")
           (create-prefix-dispatcher "/login" 'login-handler)
+          (create-prefix-dispatcher "/logout" 'logout-handler)
           (create-prefix-dispatcher "/sessions" 'sessions-handler)
           (create-static-file-dispatcher-and-handler "/favicon.ico" #p"static/favicon.ico")
           (create-static-file-dispatcher-and-handler "/home" #p"static/home.html")

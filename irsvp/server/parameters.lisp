@@ -18,7 +18,6 @@
 
 ; These three should be *off* for release.
 (setf *show-lisp-errors-p* t)
-(setf *access-log-pathname* #p"/Users/max/src/lisp/irsvp/logs/access.log")
 (defvar *irsvp-debug* t)
 
 (if *irsvp-debug*

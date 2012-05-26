@@ -2,7 +2,7 @@
 
 (defun index-handler ()
  (if *session*
-  (redirect "/home")
+  (handle-static-file #p"static/index-logged-in.html")
   (handle-static-file #p"static/index.html")
  )
 )
