@@ -19,6 +19,7 @@
        (:file "join")
        (:file "home")
        (:file "index")
+       (:file "contact")
        (:file "init")
        (:file "create-schema")
        (:file "event-model")
