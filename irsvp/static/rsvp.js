@@ -23,18 +23,21 @@ function confirmedRsvp(json) {
     $('#rsvp-email').removeAttr('disabled');
 
     var numGuests = json.numGuests;
-    var selectionDropdownText = 
-        '<option value="-1" selected="true"></option>'
-        + '<option value="0">will not be coming :(</option>'
-        + '<option value="1">will be coming!</option>';
+
+    var guestText = [ '', 'will not be coming :(', 'will be coming!'];
     for (var i = 1; i < numGuests; ++i) {
-        selectionDropdownText += '<option value="' 
-            + (i + 1) 
-            + '">will be coming with ' 
-            + i + ' guest' 
-            + (i > 1 ? 's' : '')
-            + '!</option>';
+        guestText[i] = 'will be coming with ' + i + ' guest' + (i > 1 ? 's' : '') + '!';
     }
+
+    var selectionDropdownText = '';
+    for (var i = 0; i < guestText.length; ++i) {
+        selectionDropdownText += '<option value="' + (i - 1) + '"';
+        if (json.responded == (i - 1)) {
+            selectionDropdownText += ' selected="true"';
+        }
+        selectionDropdownText += '>' + guestText[i] + '</option>';
+    }
+
     $('#rsvp-number-box').html(selectionDropdownText);
     $('#rsvp-number-box').removeAttr('disabled');
     $('#rsvp-number-box').change(handleSelectionChange);
@@ -50,6 +53,7 @@ function confirmedRsvp(json) {
 }
 
 function handleRsvpKeypress(event) {
+    var data
     var code = escape($('#rsvp-code').val());
     var documentUrl = documentUrlBase + code;
     var ajaxRequest = {
@@ -61,8 +65,37 @@ function handleRsvpKeypress(event) {
     $.ajax(ajaxRequest)
 }
 
+
+function confirmedSubmission(json) {
+    $('#rsvp-confirm-submit').hide();
+    if (json.success == "true") {
+        $('#response').html('<h3>Thank you for confirming!</h3>');
+    } else {
+        $('#response').html('<h3>It seems that something went wrong. Please <a href="/contact">contact us!</a>"</h3>');
+    }
+}
+
+function handleRsvpSubmit(event) {
+    var submitData = {
+        email : $('#rsvp-email').val(),
+        attendance : $('#rsvp-number-box').val(),
+        special : $('#rsvp-special').val(),
+    };
+    var code = escape($('#rsvp-code').val());
+    var documentUrl = documentUrlBase + code;
+    var ajaxRequest = {
+        url : documentUrl,
+        type : "PUT",
+        data : JSON.stringify(submitData),
+        dataType : "json",
+        success : confirmedSubmission
+    };
+    $.ajax(ajaxRequest);
+}
+
 function init() {
     documentUrlBase = '/data/rsvp/';
     $('#rsvp-code').keyup(handleRsvpKeypress);
+    $('#rsvp-confirm-submit').click(handleRsvpSubmit);
 }
 

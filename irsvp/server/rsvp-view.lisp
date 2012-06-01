@@ -19,6 +19,26 @@
 )
 
 (defun rsvp-view-handle-put (rsvp-code)
+ (let* ((lowercase-code (string-downcase rsvp-code))
+        (raw-json-string (octets-to-string (raw-post-data :request *request*) :external-format :utf8))
+        (json-string (if (null-or-empty raw-json-string)
+                         nil
+                         (decode-json-from-string raw-json-string)))
+        (email (cdr (assoc :email json-string)))
+        (attendance (cdr (assoc :attendance json-string)))
+        (requests (cdr (assoc :special json-string))))
+  (when (null json-string)
+   (return-from rsvp-view-handle-put *invalid-rsvp*))
+
+  (with-connection *db-connection-parameters*
+   (let* ((invite-query (select-dao 'invite (:= 'code lowercase-code)))
+          (invite (car invite-query)))
+    (setf (invite-email invite) email)
+    (setf (invite-special invite) requests)
+    (setf (invite-responded invite) attendance)
+    (update-dao invite)))
+  *successful-login-response*
+ )
 )
 
 (defun rsvp-view-process-rsvp (rsvp-code method)
