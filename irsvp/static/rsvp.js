@@ -26,7 +26,7 @@ function confirmedRsvp(json) {
 
     var guestText = [ '', 'will not be coming :(', 'will be coming!'];
     for (var i = 1; i < numGuests; ++i) {
-        guestText[i] = 'will be coming with ' + i + ' guest' + (i > 1 ? 's' : '') + '!';
+        guestText[i + 2] = 'will be coming with ' + i + ' guest' + (i > 1 ? 's' : '') + '!';
     }
 
     var selectionDropdownText = '';
