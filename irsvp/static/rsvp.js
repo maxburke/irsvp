@@ -79,7 +79,7 @@ function handleRsvpSubmit(event) {
     var submitData = {
         email : $('#rsvp-email').val(),
         attendance : $('#rsvp-number-box').val(),
-        special : $('#rsvp-special').val(),
+        special : $('#rsvp-special').val()
     };
     var code = escape($('#rsvp-code').val());
     var documentUrl = documentUrlBase + code;
